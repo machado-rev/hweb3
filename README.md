@@ -12,12 +12,12 @@ Run the following in your project folder:
 	npm install hweb3 --save
 
 ## Web Dapp Usage
-This is example is meant for web dapps who would like to use Hweb3's convenience methods with Qrypto's RPC provider. Qrypto is a Html wallet [Chrome extension](https://chrome.google.com/webstore/detail/qrypto/hdmjdgjbehedbnjmljikggbmmbnbmlnd). More details about Qrypto [here](https://github.com/bodhiproject/qrypto).
+This is example is meant for web dapps who would like to use Hweb3's convenience methods with 's RPC provider. Altmask is a Html wallet. More details about Altmask [here](https://github.com/machado-rev/altmask).
 
 ### 1. Construct Hweb3 instance
-If you have Qrypyto installed, you will have a `window.qrypto` object injected in your browser tab. Pass that into Hweb3 as a parameter to set the provider.
+If you have Altmask installed, you will have a `window.altmask` object injected in your browser tab. Pass that into Hweb3 as a parameter to set the provider.
 ```
-const hweb3 = new Hweb3(window.qrypto.rpcProvider);
+const hweb3 = new Hweb3(window.altmask.rpcProvider);
 ```
 
 ### 2. Construct Contract instance
@@ -30,12 +30,12 @@ const contractAbi = [{"constant":false,"inputs":[{"name":"_eventAddress","type":
 const contract = hweb3.Contract(contractAddress, contractAbi);
 ```
 
-### 3. Get Logged In Qrypto Account
-To get the current logged in account in Qrypto, you will have to add an [Event Listener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp) to listen to messages sent from Qrypto.
+### 3. Get Logged In Altmask Account
+To get the current logged in account in Altmask, you will have to add an [Event Listener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp) to listen to messages sent from Altmask.
 ```
 let account;
 
-function onQryptoAcctChange(event) {
+function onAltmaskAcctChange(event) {
   if (event.data.message && event.data.message.type == "ACCOUNT_CHANGED") {
     account = event.data.message.payload;
 
@@ -48,15 +48,15 @@ function onQryptoAcctChange(event) {
     //   balance: 49.10998413
     // } 
 
-    // You may also get the account from `window.qrypto.account`.
-    // account = window.qrypto.account
+    // You may also get the account from `window.altmask.account`.
+    // account = window.altmask.account
   }
 }
-window.addEventListener('message', onQryptoAcctChange, false);
+window.addEventListener('message', onAltmaskAcctChange, false);
 ```
 
 ### 4. Execute sendtocontract
-The last piece is to execute a `sendtocontract` on your Contract instance. This will automatically show a Qrypto popup to confirm that you would like to send the transaction.
+The last piece is to execute a `sendtocontract` on your Contract instance. This will automatically show a Altmask popup to confirm that you would like to send the transaction.
 ```
 // Does a sendtocontract call on a function called setResult(uint8)
 const tx = await contract.send('setResult', {
@@ -85,11 +85,11 @@ const { Hweb3 } = require('hweb3');
 // Default Html RPC ports: testnet=13889 mainnet=3889
 const hweb3 = new Hweb3('http://bodhi:bodhi@localhost:13889');
 
-// Instantiate Hweb3 with QryptoRPCProvider
-// QryptoRPCProvider is a provider for the Qrypto Wallet Chrome Extension.
-// Please note QryptoRPCProvider only allows the rawCall() method to be used.
+// Instantiate Hweb3 with AltmaskRPCProvider
+// AltmaskRPCProvider is a provider for the Altmask Wallet Chrome Extension.
+// Please note AltmaskRPCProvider only allows the rawCall() method to be used.
 // It is specifically used for `sendtocontract` and `callcontract` only.
-const hweb3 = new Hweb3(window.qrypto.rpcProvider);
+const hweb3 = new Hweb3(window.altmask.rpcProvider);
 ```
 
 ### isConnected()
